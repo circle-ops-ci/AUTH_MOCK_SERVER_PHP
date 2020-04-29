@@ -1,0 +1,50 @@
+<?php
+include_once(dirname(__DIR__).'/mockserver.conf.php');
+include_once 'randstr.php';
+
+function build_checksum($params, $t, $r, $postData) {
+    array_push($params, 't='.$t, 'r='.$r);
+    if (!empty($postData)) {
+        array_push($params, $postData);
+    }
+    sort($params);
+    array_push($params, 'secret='.$GLOBALS['api_secret']);
+    return hash('sha256', implode('&', $params));
+}
+
+function make_request($method, $api, $params, $postData) {
+    $r = random_string();
+    $t = time();
+    $url = $GLOBALS['api_server_url'].$api.'?t='.$t.'&r='.$r;
+    if (!empty($params)) {
+        $url .= '&'.implode('&', $params);
+    }
+
+    $ch = curl_init();
+    $header = array(
+        'X-API-CODE: '.$GLOBALS['api_code'],
+        'X-CHECKSUM: '.build_checksum($params, $t, $r, $postData),
+    );
+    curl_setopt($ch, CURLOPT_URL, $url);
+    if (!strcasecmp($method, 'POST') || !strcasecmp($method, 'DELETE')) {
+        if (!strcasecmp($method, 'POST')) {
+            curl_setopt($ch, CURLOPT_POST, true);
+        } else {
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
+        }
+        if (!is_null($postData) && strlen($postData) > 0) {
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);
+            array_push($header, 'Content-Length: '.strlen($postData));
+        }
+    }
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    $result = curl_exec($ch);
+    $resp = array();
+    $resp['result'] = $result;
+    $resp['status'] = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    curl_close ($ch);
+    
+    return $resp;
+}
+?>
