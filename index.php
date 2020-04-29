@@ -110,6 +110,16 @@ if (!strcmp($path, '/v1/mock/users')) {
     log_access('/v1/mock/users/emailotp/verify', $resp);
     echo response($resp);
     return;
+} else if (!strcmp($path, '/v1/mock/users/info/email')) {
+    $resp = make_request($method, '/v1/api/users/info/email', $query, $post_data);
+    log_access('/v1/mock/users/info/email', $resp);
+    echo response($resp);
+    return;
+} else if (!strcmp($path, '/v1/mock/users/info/verify')) {
+    $resp = make_request($method, '/v1/api/users/info/verify', $query, $post_data);
+    log_access('/v1/mock/users/info/verify', $resp);
+    echo response($resp);
+    return;
 } else if (!strcmp($path, '/v1/mock/callback')) {
     $header_checksum = $_SERVER['HTTP_X_CHECKSUM'];
     $payload = $post_data.$GLOBALS['api_secret'];
@@ -126,7 +136,7 @@ if (!strcmp($path, '/v1/mock/users')) {
 
 $resp['status'] = 404;
 $resp['result'] = '{"result": "invalid path"}';
-log_access('/v1/mock/devices', $resp);
+log_access($path, $resp);
 echo response($resp);
 
 ?>

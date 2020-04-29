@@ -53,11 +53,11 @@ http://localhost:8892/v1/mock/callback
 	- $ php -S 0.0.0.0:8892
 
 <a name="curl-testing-commands"></a>
-## CURL Testing Commands
+# CURL Testing Commands
 
 Refer to [here](https://github.com/CYBAVO/AUTH_MOCK_SERVER#curl-testing-commands) for curl testing commands.
 
 <a name="other-language-versions"></a>
-## Other Language Versions
+# Other Language Versions
 - [GO](https://github.com/CYBAVO/AUTH_MOCK_SERVER)
 - [Javascript](https://github.com/CYBAVO/AUTH_MOCK_SERVER_JAVASCRIPT)
