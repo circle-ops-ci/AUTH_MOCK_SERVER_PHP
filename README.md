@@ -45,12 +45,12 @@ http://localhost:8892/v1/mock/callback
 > Required version: PHP 7.3.7 or later
 
 - If you have PHP installed then use following command to start the built-in web server.
-	- > cd AUTH\_MOCK\_SERVER\_PHP\_PATH
-	- > php -S 0.0.0.0:8892
+	- $ cd AUTH\_MOCK\_SERVER\_PHP\_PATH
+	- $ php -S 0.0.0.0:8892
 - Otherwise use docker to setup mock server.
-	- > docker run --name mockserver -d -v AUTH\_MOCK\_SERVER\_PHP\_PATH:/var/www/html -p 8892:8892 php:7.3.7-fpm
-	- > docker exec -it mockserver bash
-	- > php -S 0.0.0.0:8892
+	- $ docker run --name mockserver -d -v AUTH\_MOCK\_SERVER\_PHP\_PATH:/var/www/html -p 8892:8892 php:7.3.7-fpm
+	- $ docker exec -it mockserver bash
+	- $ php -S 0.0.0.0:8892
 
 <a name="curl-testing-commands"></a>
 ## CURL Testing Commands
