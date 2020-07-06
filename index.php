@@ -43,7 +43,7 @@ function response_plaintext($status_code, $text)
     return $text;
 }
 
-function base64url_encode($data) {                                                                                                                                           
+function base64url_encode($data) {
     return strtr(base64_encode($data), '+/', '-_');
 } 
 
@@ -118,6 +118,21 @@ if (!strcmp($path, '/v1/mock/users')) {
 } else if (!strcmp($path, '/v1/mock/users/info/verify')) {
     $resp = make_request($method, '/v1/api/users/info/verify', $query, $post_data);
     log_access('/v1/mock/users/info/verify', $resp);
+    echo response($resp);
+    return;
+} else if (!strcmp($path, '/v1/mock/users/edit')) {
+    $resp = make_request($method, '/v1/api/users/edit', $query, $post_data);
+    log_access('/v1/mock/users/edit', $resp);
+    echo response($resp);
+    return;
+} else if (!strcmp($path, '/v1/mock/users/remove')) {
+    $resp = make_request($method, '/v1/api/users/remove', $query, $post_data);
+    log_access('/v1/mock/users/remove', $resp);
+    echo response($resp);
+    return;
+} else if (!strcmp($path, '/v1/mock/healthy')) {
+    $resp = make_request($method, '/v1/api/healthy', $query, $post_data);
+    log_access('/v1/mock/healthy', $resp);
     echo response($resp);
     return;
 } else if (!strcmp($path, '/v1/mock/callback')) {
